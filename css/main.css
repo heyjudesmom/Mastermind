@@ -1,3 +1,14 @@
+:root {
+    --red: #DF3629;
+    --orange: #e3854f;
+    --yellow: #f5f177;
+    --green: #35aa79;
+    --blue: #4BBBD2;
+    --purple: #8E8AF0;
+    --indigo: #182534;
+    --brown: #937c67;
+}
+
 body {
     display: flex;
     flex-direction: column;
