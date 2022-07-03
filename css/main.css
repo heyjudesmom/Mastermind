@@ -14,21 +14,23 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40vmin;
+    margin: 10vmin;
     height: 100vh;
 }
 
 #board {
     display: grid;
-    grid-template-rows: repeat(13, 10vmin);
-    grid-template-columns: 50vmin;
+    grid-template-rows: repeat(13, 7vmin);
+    grid-template-columns: 30vmin;
+    border: 1vmin solid black;
+    background-color: wheat;
 }
 
-#board > div:not(#secret, #bank){
+#board > div:not(#secret, .bank){
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    border: 0.5vmin solid gray;
+    border: 0.25vmin solid var(--brown);
     grid-template-areas: 
     "c c c c f";
 }
@@ -39,14 +41,14 @@ body {
     border: 0.5vmin solid hotpink;
 }
 
-#bank {
+.bank {
     height: 20vmin;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     border: 0.5vmin solid black;
 }
-#bank > div, #secret > div {
+.bank > div, #secret > div { 
     border: 0.2vmin solid black;
     border-radius: 50%;
     margin: 1vmin;
@@ -58,16 +60,51 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    background-color: white;
+    background-color: wheat;
 }
 .c {
     grid-area: "c";
-    border: 0.2vmin solid gray;
+    border: 0.3vmin solid gray;
     border-radius: 50%;
-    margin: 2vmin;
+    margin: 1vmin;
 }
 .f > div {
     border: 0.2vmin solid;
     border-radius: 50%;
     margin: 1vmin;
+    background-color:thistle
+}
+#red {
+    background-color: var(--red);
+}
+#orange {
+    background-color: var(--orange);
+}
+#yellow {
+    background-color: var(--yellow);
+}
+#green {
+    background-color: var(--green);
+}
+#blue {
+    background-color: var(--blue);
+}
+#purple {
+    background-color: var(--purple);
+}
+#indigo {
+    background-color: var(--indigo);
+}
+#brown {
+    background-color: var(--brown);
+}
+#secret > div {
+    border: 0.5vmin solid blue;
+}
+h1 {
+    margin: 0;
+}
+h2 {
+    padding: 3vmin;
+    margin: 0;
 }
