@@ -70,6 +70,7 @@ body {
     border: 0.1vmin solid;
     background-color:rgb(168, 169, 162);
     margin: 0.5vmin;
+    border-radius: 50%;
 }
 #red {
     background-color: var(--red);
