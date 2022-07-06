@@ -60,11 +60,9 @@ function renderCheckBtn() {
     checkBtn.style.visibility = currentChoices.length === 4 ? 'visible' : 'hidden';
 }
 function renderBankClicks() {
-    console.log('renderClicks', rowEls)
-
     //guards
     rowEls.forEach(function(div, idx) {
-        console.log(div, idx, 'hello')
+        // console.log(div, idx, 'hello')
         div.style.backgroundColor = COLORS[currentChoices[idx]];
     })
 }
@@ -76,7 +74,6 @@ function renderSecret(){ //For step 1A. Done.
 };
 function storeBankClicks(evt) { //For Step 2a. Done
     //guards
-    console.log('storeBankClicks')
     if (evt.target === document.querySelector('section')) {
         return
     }
