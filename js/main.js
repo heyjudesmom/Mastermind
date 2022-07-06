@@ -14,19 +14,20 @@ const MAX_WRONG_GUESSES = 10;
 
 /*----- app's state (variables) -----*/
 let secrets = []; //Array to hold randomly selected colors
-let gameStatus; //true: game in play, false: secret revealed
 let currentChoices = [];//Array to hold bank choices for row
-let rows = [{slot1: '', slot2: '', slot3: '', slot4: ''}];//
-let pegs = [];
+let score = {};
+let gameStatus; //true: game in play, false: secret revealed
+
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
 const rowEls = [...document.querySelectorAll('.guess > .dropzone')]; //returns all 10 guess rows 
 const bankEls = [...document.querySelectorAll('#bank > div')];
-bankEls.forEach(function(div, idx) {
-    div.style.backgroundColor = COLORS[idx]
-});
+// bankEls.forEach(function(div, idx) {
+//     div.style.backgroundColor = COLORS[idx]
+// });
 const checkBtn = document.getElementById('check');
 const feedbackEls = document.querySelectorAll('.f > div');
+const row = []
 const playBtn = document.getElementById('play');
 //TODO: cache the messageEl to declare win or loss
 
@@ -45,13 +46,15 @@ function init() {
 
 function generateSecret() { //For Step 1. Done
     SECRET_SLOTS.map(function(){
-        return secrets.push(COLORS[Math.floor(Math.random() * COLORS.length)])
+        secrets.push(Math.floor(Math.random() * COLORS.length))
+        return 
     })
 }
 function render() {
     renderSecret(); //For Step 1A. Done
-    renderBankClicks();
-    renderCheckBtn();
+    renderBankClicks(); //Done
+    renderCheckBtn(); //Done
+    renderFeedback();
 }
 
 function renderCheckBtn() {
@@ -60,13 +63,13 @@ function renderCheckBtn() {
 function renderBankClicks() {
     //guards
     rowEls.forEach(function(div, idx) {
-        div.style.backgroundColor = currentChoices[idx];
-})
+        div.style.backgroundColor = COLORS[currentChoices[idx]];
+    })
 }
 
 function renderSecret(){ //For step 1A. Done.
     secretEls.forEach(function(div, idx) {
-      div.style.backgroundColor = secrets[idx];
+        div.style.backgroundColor = COLORS[secrets[idx]];
     })
 };
 function storeBankClicks(evt) { //For Step 2a. Done
@@ -79,31 +82,79 @@ function storeBankClicks(evt) { //For Step 2a. Done
         currentChoices = []
         rowEls.forEach(function(div) {
             div.style.backgroundColor = null;
-          })
+        })
     }
-    currentChoices.push(evt.target.style.backgroundColor);
+    if (evt.target === document.getElementById('red')) {
+        currentChoices.push(0);
+    }
+    if (evt.target === document.getElementById('orange')) {
+        currentChoices.push(1);
+    }if (evt.target === document.getElementById('yellow')) {
+        currentChoices.push(2);
+    }if (evt.target === document.getElementById('green')) {
+        currentChoices.push(3);
+    }if (evt.target === document.getElementById('blue')) {
+        currentChoices.push(4);
+    }if (evt.target === document.getElementById('purple')) {
+        currentChoices.push(5);
+    }if (evt.target === document.getElementById('indigo')) {
+        currentChoices.push(6);
+    }if (evt.target === document.getElementById('brown')) {
+        currentChoices.push(7);
+    }
     render();
 }
 function handleCheck() {
-    if (currentChoices.toString() === secrets.toString()){
-     console.log('hello');
-     gameStatus = false;
-     render();
-    } else if (currentChoices.includes(secrets[0], secrets[1], secrets[2], secrets[3])) {
-        if (secrets.includes(currentChoices[0])) {
-            pegs.push('a')
-        } if (secrets.includes(currentChoices[1])) {
-            pegs.push('b')
-        } if (secrets.includes(currentChoices[2])) {
-            pegs.push('c')
-        } if (secrets.includes(currentChoices[3])) {
-            pegs.push('d')
-        }         renderFeedback()
+    let perfect = 0;
+    let almost = 0;
+    if (currentChoices.toString() === secrets.toString()) {
+        console.log('hello');
+        //  gameStatus = false;
+        render();
     } 
+    let secretCopy = secrets.map(function(val){
+        return val
+    })
+    let guessCopy = currentChoices.map(function(val){
+        return val
+    })
+    guessCopy.forEach(function(val, idx){
+        if (val === secretCopy[idx]) {
+            perfect += 1;
+            guessCopy[idx] = null
+            secretCopy[idx] = null
+        } 
+        return
+    })
+    guessCopy.forEach(function(val, idx){
+        if (val === null) {
+            return
+        }
+        secretCopy.indexOf(val);
+        if (secretCopy.indexOf(val) > -1) {
+            almost += 1;
+            guessCopy[idx] = null
+        }
+    })
+    score.perfect = perfect;
+    score.almost = almost;
+    // currentChoices.forEach(function(choice, idx){
+    //     if (secrets[idx] === choice) {
+    //         feedback.unshift('black');
+    //     } else if (secrets.includes(choice)) {
+    //         feedback.push('white')
+    //     }    
+    // })
+   renderFeedback()
+}
 
- }
 function renderFeedback() {
-    
+    feedbackEls.forEach(function(el) {
+        if (score.perfect > 0) {
+            el.style.backgroundColor = 'black';
+
+        }
+    })
 }
 
 function handlePlay() {
