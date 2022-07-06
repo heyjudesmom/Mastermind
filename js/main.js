@@ -18,16 +18,17 @@ let currentChoices = [];//Array to hold bank choices for row
 let score = {};
 let gameStatus; //true: game in play, false: secret revealed
 let rowId = 1;
+//let currentRow;
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
-const rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];  
 const bankEls = [...document.querySelectorAll('#bank > div')];
+//const boardRows = [...document.querySelectorAll('.guess')].reverse();
 // bankEls.forEach(function(div, idx) {
 //     div.style.backgroundColor = COLORS[idx]
 // });
+let rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];  
 const checkBtn = document.getElementById('check');
-const feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
-const row = []
+let feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
 const playBtn = document.getElementById('play');
 //TODO: cache the messageEl to declare win or loss
 
@@ -42,25 +43,26 @@ function init() {
     gameStatus = true;
     generateSecret(); //Step 1. Done
     render();
-};
+   // currentRow = boardRows[rowId - 1];
+}
+function render() {
+    renderSecret(); //For Step 1A. Done
+    renderBankClicks(); //Done
+    renderCheckBtn(); //Done
 
+}
 function generateSecret() { //For Step 1. Done
     SECRET_SLOTS.map(function(){
         secrets.push(Math.floor(Math.random() * COLORS.length))
         return 
     })
 }
-function render() {
-    renderSecret(); //For Step 1A. Done
-    renderBankClicks(); //Done
-    renderCheckBtn(); //Done
-}
-
 function renderCheckBtn() {
     checkBtn.style.visibility = currentChoices.length === 4 ? 'visible' : 'hidden';
 }
 function renderBankClicks() {
     //guards
+    rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
     rowEls.forEach(function(div, idx) {
         // console.log(div, idx, 'hello')
         div.style.backgroundColor = COLORS[currentChoices[idx]];
@@ -73,21 +75,21 @@ function renderSecret(){ //For step 1A. Done.
     })
 };
 function storeBankClicks(evt) { //For Step 2a. Done
+    console.log(rowEls, rowId)
     //guards
     if (evt.target === document.querySelector('section')) {
         return
     }
-    if (currentChoices.length === SECRET_SLOTS.length) {
-        currentChoices = []
-        rowEls.forEach(function(div) {
-            console.log(div, idx, 'hello')
-            div.style.backgroundColor = null;
-        })
-    }
+    // if (currentChoices.length === SECRET_SLOTS.length) {
+    //     currentChoices = []
+    //     rowEls.forEach(function(div) {
+    //         // console.log(div, 'hello')
+    //         div.style.backgroundColor = null;
+    //     })
+    // }
     if (evt.target === document.getElementById('red')) {
         currentChoices.push(0);
-    }
-    if (evt.target === document.getElementById('orange')) {
+    }if (evt.target === document.getElementById('orange')) {
         currentChoices.push(1);
     }if (evt.target === document.getElementById('yellow')) {
         currentChoices.push(2);
@@ -102,15 +104,14 @@ function storeBankClicks(evt) { //For Step 2a. Done
     }if (evt.target === document.getElementById('brown')) {
         currentChoices.push(7);
     }
-    console.log(currentChoices)
-
+    // console.log(currentChoices) //TODO: delete this console log
     render();
 }
 function handleCheck() {
     let perfect = 0;
     let almost = 0;
     if (currentChoices.toString() === secrets.toString()) {
-        console.log('hello');
+        console.log('hello'); //TODO: Change this to render the secret code to visible
         //  gameStatus = false;
         render();
     } 
@@ -148,11 +149,16 @@ function handleCheck() {
     //     }    
     // })
    renderFeedback()
+   
+   rowId = rowId + 1;
+   currentChoices = [];
+   rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
+   feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
+   //currentRow = boardRows[rowId-1];
 }
 
 function renderFeedback() {
     console.log(score);
-
     feedbackEls.forEach(function(el) {
         if (score.perfect > 0) {
             el.style.backgroundColor = 'black';
