@@ -11,14 +11,12 @@ const COLORS = [
 ]
 const SECRET_SLOTS =[1, 2, 3, 4];
 const MAX_WRONG_GUESSES = 10;
-
 /*----- app's state (variables) -----*/
 let secrets = []; //Array to hold randomly selected colors
 let currentChoices = [];//Array to hold bank choices for row
 let score = {};
-let gameStatus; //true: game in play, false: secret revealed
+let gameStatus; 
 let rowId = 1;
-//let currentRow;
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
 const bankEls = [...document.querySelectorAll('#bank > div')];
@@ -49,7 +47,11 @@ function render() {
     renderSecret(); //For Step 1A. Done
     renderBankClicks(); //Done
     renderCheckBtn(); //Done
+    renderPlayBtn();
 
+}
+function renderPlayBtn() {
+    playBtn.style.visibility = gameStatus === false ? 'visible' : 'hidden'
 }
 function generateSecret() { //For Step 1. Done
     SECRET_SLOTS.map(function(){
@@ -70,23 +72,27 @@ function renderBankClicks() {
 }
 
 function renderSecret(){ //For step 1A. Done.
+if (gameStatus === false) {
     secretEls.forEach(function(div, idx) {
-        div.style.backgroundColor = COLORS[secrets[idx]];
-    })
+    div.style.backgroundColor = COLORS[secrets[idx]];
+    div.textContent = null
+})} else {
+    secretEls.forEach(function(div, idx) {
+    div.textContent = '??????';
+})}
+
 };
 function storeBankClicks(evt) { //For Step 2a. Done
-    console.log(rowEls, rowId)
     //guards
     if (evt.target === document.querySelector('section')) {
         return
     }
-    // if (currentChoices.length === SECRET_SLOTS.length) {
-    //     currentChoices = []
-    //     rowEls.forEach(function(div) {
-    //         // console.log(div, 'hello')
-    //         div.style.backgroundColor = null;
-    //     })
-    // }
+    if (currentChoices.length === SECRET_SLOTS.length) {
+        currentChoices = []
+        rowEls.forEach(function(div) {
+            div.style.backgroundColor = null;
+        })
+    }
     if (evt.target === document.getElementById('red')) {
         currentChoices.push(0);
     }if (evt.target === document.getElementById('orange')) {
@@ -104,15 +110,18 @@ function storeBankClicks(evt) { //For Step 2a. Done
     }if (evt.target === document.getElementById('brown')) {
         currentChoices.push(7);
     }
+    if (currentChoices.length > 4) {
+        currentChoices.length = 0
+    }
     // console.log(currentChoices) //TODO: delete this console log
     render();
+    
 }
 function handleCheck() {
     let perfect = 0;
     let almost = 0;
     if (currentChoices.toString() === secrets.toString()) {
         console.log('hello'); //TODO: Change this to render the secret code to visible
-        //  gameStatus = false;
         render();
     } 
     let secretCopy = secrets.map(function(val){
@@ -141,22 +150,28 @@ function handleCheck() {
     })
     score.perfect = perfect;
     score.almost = almost;
-    // currentChoices.forEach(function(choice, idx){
-    //     if (secrets[idx] === choice) {
-    //         feedback.unshift('black');
-    //     } else if (secrets.includes(choice)) {
-    //         feedback.push('white')
-    //     }    
-    // })
-   renderFeedback()
-   
-   rowId = rowId + 1;
-   currentChoices = [];
-   rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
-   feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
-   //currentRow = boardRows[rowId-1];
+    if (score.perfect === 4) {
+        gameStatus = false
+    }
+    console.log(gameStatus)
+    renderFeedback()
+    rowId = rowId + 1;
+    currentChoices = [];
+    rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
+    feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
+    renderCheckBtn()
+    getGameStatus()
 }
-
+function getGameStatus() {
+    if ((rowId < MAX_WRONG_GUESSES + 1) && score.perfect !== 4) {
+        gameStatus === true;
+      } else {
+        gameStatus === false
+      }
+    if (gameStatus === false) {
+        render();
+      }
+}
 function renderFeedback() {
     console.log(score);
     feedbackEls.forEach(function(el) {
