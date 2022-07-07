@@ -16,7 +16,7 @@ let secrets = [];
 let currentChoices = [];
 let score = {};
 let gameStatus; 
-let rowId;
+let rowId = 1;
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
 const bankEls = [...document.querySelectorAll('#bank > div')];
@@ -49,11 +49,11 @@ function render() {
 }
 function renderMsg() {
     if (gameStatus === 'W') {
-        msgEl.textContent = 'You cracked the code!';
+        msgEl.textContent = 'You won!';
     } else if (gameStatus === 'L') {
         msgEl.innerHTML = 'You lost!'
     } else {
-        msgEl.textContent = 'The game is afoot.'
+        msgEl.textContent = 'Crack the code to win.'
     }
 }
 function handleReplay() {

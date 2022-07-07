@@ -15,7 +15,7 @@ body {
     justify-content: stretch;
     align-items: center;
     margin: 0;
-    font-family: 'Bungee Hairline', cursive;
+    font-family: 'Bungee Shade', cursive;
 }
 
 #board {
@@ -107,9 +107,12 @@ body {
 h1 {
     padding: 2% 100%;
     background-color: #a19fc5;
+    font-size: 50px;
 }
 h2 {
-    padding: 3vmin;
+    font-family: 'Dongle', sans-serif;
+    font-size: 50px;
+    padding: 1vmin;
     margin: 0;
 }
 footer{
