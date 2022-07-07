@@ -12,48 +12,60 @@ const COLORS = [
 const SECRET_SLOTS =[1, 2, 3, 4];
 const MAX_WRONG_GUESSES = 10;
 /*----- app's state (variables) -----*/
-let secrets = []; //Array to hold randomly selected colors
-let currentChoices = [];//Array to hold bank choices for row
+let secrets = [];
+let currentChoices = [];
 let score = {};
 let gameStatus; 
 let rowId = 1;
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
 const bankEls = [...document.querySelectorAll('#bank > div')];
-//const boardRows = [...document.querySelectorAll('.guess')].reverse();
-// bankEls.forEach(function(div, idx) {
-//     div.style.backgroundColor = COLORS[idx]
-// });
 let rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];  
 const checkBtn = document.getElementById('check');
 let feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
 const playBtn = document.getElementById('play');
-//TODO: cache the messageEl to declare win or loss
+const msgEl = document.querySelector('h2');
 
 /*----- event listeners -----*/
 document.getElementById('bank').addEventListener('click', storeBankClicks);
 document.getElementById('check').addEventListener('click', handleCheck);
-document.getElementById('play').addEventListener('click', handlePlay);
+document.getElementById('play').addEventListener('click', handleReplay);
 /*----- functions -----*/
 init();
 
 function init() {
-    gameStatus = true;
-    generateSecret(); //Step 1. Done
+    rowId = 1;
+    secrets = [];
+    gameStatus = null;
+    generateSecret(); 
     render();
-   // currentRow = boardRows[rowId - 1];
 }
 function render() {
-    renderSecret(); //For Step 1A. Done
-    renderBankClicks(); //Done
-    renderCheckBtn(); //Done
+    renderSecret();
+    renderCheckBtn();
     renderPlayBtn();
-
+    renderMsg();
+}
+function renderMsg() {
+    if (gameStatus === 'W') {
+        msgEl.textContent = 'You cracked the code!';
+    } else if (gameStatus === 'L') {
+        msgEl.innerHTML = 'Dear God, what is there in your funny little brains? <br> It must be really boring.'
+    } else {
+        msgEl.textContent = 'The game is afoot.'
+    }
+}
+function handleReplay() {
+    let clearThese = [...document.querySelectorAll('div')];
+    clearThese.forEach(function(div){
+        return div.style.backgroundColor = null;
+    }) 
+    init();
 }
 function renderPlayBtn() {
-    playBtn.style.visibility = gameStatus === false ? 'visible' : 'hidden'
+    playBtn.style.visibility = gameStatus !== null ? 'visible' : 'hidden'
 }
-function generateSecret() { //For Step 1. Done
+function generateSecret() {
     SECRET_SLOTS.map(function(){
         secrets.push(Math.floor(Math.random() * COLORS.length))
         return 
@@ -63,27 +75,25 @@ function renderCheckBtn() {
     checkBtn.style.visibility = currentChoices.length === 4 ? 'visible' : 'hidden';
 }
 function renderBankClicks() {
-    //guards
     rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
     rowEls.forEach(function(div, idx) {
-        // console.log(div, idx, 'hello')
         div.style.backgroundColor = COLORS[currentChoices[idx]];
     })
 }
-
-function renderSecret(){ //For step 1A. Done.
-if (gameStatus === false) {
-    secretEls.forEach(function(div, idx) {
-    div.style.backgroundColor = COLORS[secrets[idx]];
-    div.textContent = null
-})} else {
-    secretEls.forEach(function(div, idx) {
-    div.textContent = '??????';
-})}
-
+function renderSecret(){ 
+    if (gameStatus !== null) {
+        secretEls.forEach(function(div, idx) {
+            div.style.backgroundColor = COLORS[secrets[idx]];
+            div.innerHTML = null;
+        })  
+    } else {
+        secretEls.forEach(function(div) {
+            div.innerHTML = '<h1>?</h1>';
+            div.style.backgroundColor = 'white';
+        })
+    }
 };
-function storeBankClicks(evt) { //For Step 2a. Done
-    //guards
+function storeBankClicks(evt) { 
     if (evt.target === document.querySelector('section')) {
         return
     }
@@ -113,7 +123,7 @@ function storeBankClicks(evt) { //For Step 2a. Done
     if (currentChoices.length > 4) {
         currentChoices.length = 0
     }
-    // console.log(currentChoices) //TODO: delete this console log
+    renderBankClicks();
     render();
     
 }
@@ -121,7 +131,6 @@ function handleCheck() {
     let perfect = 0;
     let almost = 0;
     if (currentChoices.toString() === secrets.toString()) {
-        console.log('hello'); //TODO: Change this to render the secret code to visible
         render();
     } 
     let secretCopy = secrets.map(function(val){
@@ -150,30 +159,26 @@ function handleCheck() {
     })
     score.perfect = perfect;
     score.almost = almost;
-    if (score.perfect === 4) {
-        gameStatus = false
+    gameStatus = getGameStatus();
+    renderFeedback();
+    if (gameStatus === null){
+        rowId = rowId + 1;
+        currentChoices = [];
+        rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
+        feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
     }
-    console.log(gameStatus)
-    renderFeedback()
-    rowId = rowId + 1;
-    currentChoices = [];
-    rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
-    feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
-    renderCheckBtn()
-    getGameStatus()
+    render();
 }
 function getGameStatus() {
-    if ((rowId < MAX_WRONG_GUESSES + 1) && score.perfect !== 4) {
-        gameStatus === true;
-      } else {
-        gameStatus === false
-      }
-    if (gameStatus === false) {
-        render();
-      }
+    if (score.perfect === 4) {
+        return 'W';
+    } else if (rowId === MAX_WRONG_GUESSES) {
+        return 'L';
+    } else {
+        return null;
+    }
 }
 function renderFeedback() {
-    console.log(score);
     feedbackEls.forEach(function(el) {
         if (score.perfect > 0) {
             el.style.backgroundColor = 'black';
@@ -184,12 +189,3 @@ function renderFeedback() {
         }
     })
 }
-
-function handlePlay() {
-    init();
-}
-// rows[0].slot1 = currentChoices[0]
-// rows[0].slot2 = currentChoices[1]
-// rows[0].slot3 = currentChoices[2]
-// rows[0].slot4 = currentChoices[3]
-// return rows[0]; //not working

@@ -38,6 +38,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     border: 0.5vmin solid hotpink;
+
 }
 
 #bank {
@@ -57,7 +58,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    background-color: rgb(138, 145, 104);
+    background-color: rgb(206, 211, 179);
 }
 .dropzone {
     grid-area: "c";
@@ -68,7 +69,7 @@ body {
 .f > div {
     width: 1.5em;
     border: 0.1vmin solid;
-    background-color:rgb(168, 169, 162);
+    background-color:rgba(236, 234, 227, 0.643);
     margin: 0.5vmin;
     border-radius: 50%;
 }
@@ -97,7 +98,10 @@ body {
     background-color: var(--brown);
 }
 #secret > div {
+    display: flex;
     border: 0.5vmin dashed blue;
+    justify-content: center;
+    align-items: center;
 }
 h1 {
     margin: 0;
