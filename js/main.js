@@ -16,7 +16,7 @@ let secrets = [];
 let currentChoices = [];
 let score = {};
 let gameStatus; 
-let rowId = 1;
+let rowId;
 /*----- cached element references -----*/
 const secretEls = [...document.querySelectorAll('#secret > div')];
 const bankEls = [...document.querySelectorAll('#bank > div')];
@@ -27,7 +27,7 @@ const playBtn = document.getElementById('play');
 const msgEl = document.querySelector('h2');
 
 /*----- event listeners -----*/
-document.getElementById('bank').addEventListener('click', storeBankClicks);
+let guessClick = document.getElementById('bank').addEventListener('click', storeBankClicks);
 document.getElementById('check').addEventListener('click', handleCheck);
 document.getElementById('play').addEventListener('click', handleReplay);
 /*----- functions -----*/
@@ -36,8 +36,8 @@ init();
 function init() {
     rowId = 1;
     secrets = [];
-    gameStatus = null;
     generateSecret(); 
+    gameStatus = null;
     render();
 }
 function render() {
@@ -45,12 +45,13 @@ function render() {
     renderCheckBtn();
     renderPlayBtn();
     renderMsg();
+    renderFeedback();
 }
 function renderMsg() {
     if (gameStatus === 'W') {
         msgEl.textContent = 'You cracked the code!';
     } else if (gameStatus === 'L') {
-        msgEl.innerHTML = 'Dear God, what is there in your funny little brains? <br> It must be really boring.'
+        msgEl.innerHTML = 'You lost!'
     } else {
         msgEl.textContent = 'The game is afoot.'
     }
@@ -62,6 +63,11 @@ function handleReplay() {
     }) 
     init();
 }
+function ignoreClick() {
+    if (gameStatus === 'W' || gameStatus === 'L') {
+        guessClick = null;
+    }
+}
 function renderPlayBtn() {
     playBtn.style.visibility = gameStatus !== null ? 'visible' : 'hidden'
 }
@@ -72,13 +78,15 @@ function generateSecret() {
     })
 }
 function renderCheckBtn() {
-    checkBtn.style.visibility = currentChoices.length === 4 ? 'visible' : 'hidden';
+    checkBtn.style.visibility = currentChoices.length === 4 && gameStatus === null ? 'visible' : 'hidden';
 }
 function renderBankClicks() {
-    rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
-    rowEls.forEach(function(div, idx) {
-        div.style.backgroundColor = COLORS[currentChoices[idx]];
-    })
+    if (gameStatus === null) {
+        rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
+        rowEls.forEach(function(div, idx) {
+            div.style.backgroundColor = COLORS[currentChoices[idx]];
+        })
+    }
 }
 function renderSecret(){ 
     if (gameStatus !== null) {
@@ -88,12 +96,15 @@ function renderSecret(){
         })  
     } else {
         secretEls.forEach(function(div) {
-            div.innerHTML = '<h1>?</h1>';
-            div.style.backgroundColor = 'white';
+            div.textContent = '?';
+            div.style.backgroundColor = '#a1a8aa87';
         })
     }
 };
 function storeBankClicks(evt) { 
+    if (gameStatus !== null) {
+        return
+    }
     if (evt.target === document.querySelector('section')) {
         return
     }
@@ -125,7 +136,6 @@ function storeBankClicks(evt) {
     }
     renderBankClicks();
     render();
-    
 }
 function handleCheck() {
     let perfect = 0;
@@ -160,17 +170,17 @@ function handleCheck() {
     score.perfect = perfect;
     score.almost = almost;
     gameStatus = getGameStatus();
-    renderFeedback();
+    render();
     if (gameStatus === null){
         rowId = rowId + 1;
         currentChoices = [];
         rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
         feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
     }
-    render();
 }
 function getGameStatus() {
     if (score.perfect === 4) {
+        ignoreClick();
         return 'W';
     } else if (rowId === MAX_WRONG_GUESSES) {
         return 'L';

@@ -1,35 +1,36 @@
 :root {
-    --red: #DF3629;
-    --orange: #e3854f;
-    --yellow: #f5f177;
-    --green: #35aa79;
-    --blue: #4BBBD2;
-    --purple: #8E8AF0;
-    --indigo: #182534;
-    --brown: #937c67;
+    --red: #dc736c;
+    --orange: #dcab8f;
+    --yellow: #ddcd71;
+    --green: #7eb9a1;
+    --blue: #84c3cf;
+    --purple: #a19fc5;
+    --indigo: #506884;
+    --brown: #a28971;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: stretch;
     align-items: center;
-    margin: 10vmin;
-    height: 100vh;
+    margin: 0;
+    font-family: 'Bungee Hairline', cursive;
 }
 
 #board {
     display: grid;
     grid-template-rows: 1fr repeat(10, 1fr) 2fr;
     grid-template-columns: 5fr;
-    border: 1vmin solid blue;
+    border: 1vmin solid rgb(132, 132, 186);
+    height: 60%;
 }
 
 .guess {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    border: 0.25vmin solid var(--brown);
+    border: 0.25vmin solid #D3DED5;
     grid-template-areas: 
     "c c c c f";
 }
@@ -37,12 +38,11 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    border: 0.5vmin solid hotpink;
-
+    border: 0.5vmin solid rgb(208, 156, 182);
 }
 
 #bank {
-    height: 14vmin;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -53,12 +53,12 @@ body {
 }
 
 .f {
-    border-left: 1px solid black;
+    border-left: 1px solid rgb(195, 150, 150);
     grid-area: "f";
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    background-color: rgb(206, 211, 179);
+    background-color: rgb(207, 215, 217);
 }
 .dropzone {
     grid-area: "c";
@@ -67,9 +67,10 @@ body {
     margin: 1vmin;
 }
 .f > div {
-    width: 1.5em;
+    height: 1vmin;
+    width: 1vmin;
     border: 0.1vmin solid;
-    background-color:rgba(236, 234, 227, 0.643);
+    background-color:#a1a8aa87;
     margin: 0.5vmin;
     border-radius: 50%;
 }
@@ -99,14 +100,30 @@ body {
 }
 #secret > div {
     display: flex;
-    border: 0.5vmin dashed blue;
+    border: 0.1vmin dashed rgb(191, 191, 230);
     justify-content: center;
     align-items: center;
 }
 h1 {
-    margin: 0;
+    padding: 2% 100%;
+    background-color: #a19fc5;
 }
 h2 {
     padding: 3vmin;
     margin: 0;
+}
+footer{
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    gap: 25%;
+    margin-bottom: 25%;
+    margin-top: 1%;
+}
+button {
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    background-color: lavender;
+    border-radius: 50%;
 }

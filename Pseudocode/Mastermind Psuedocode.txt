@@ -1,0 +1,26 @@
+﻿1. A secret code is randomly generated.
+   1. Secret code is revealed if the guess is correct.
+1. User creates a guess.
+   1. Clicking a color activates the color. 
+   2. Click available circle to deposit that color
+      1. If a circle has a color, it will change if the user changes it to another color.
+   3. Filling all circles with a color activates the Check button. 
+2. Clicking check
+   1. Reveals feedback
+   2. Game status is updated
+3. Feedback is revealed.
+   1. A white dot is correct color
+   2. A black dot is correct color and correct location
+   3. Secret code is revealed if guess was correct.
+4. Game status is updated.
+   1. If under max number of guesses, next row is accessible to enter guess and game status is still in play.
+   2. If max number of guesses was reached, game status is a win or loss.
+      1. Win and loss reveals secret code
+      2. Message is rendered of win or loss
+   3. Play Again button is visible when status is win or loss
+      1. Play again renders new board 
+
+
+
+
+________________
