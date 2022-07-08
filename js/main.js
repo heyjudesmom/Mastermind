@@ -138,6 +138,8 @@ function storeBankClicks(evt) {
     render();
 }
 function handleCheck() {
+    //guard
+    if (currentChoices.length !== 4) return;
     let perfect = 0;
     let almost = 0;
     if (currentChoices.toString() === secrets.toString()) {
@@ -174,7 +176,11 @@ function handleCheck() {
     if (gameStatus === null){
         rowId = rowId + 1;
         currentChoices = [];
+        feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
         rowEls = [...document.querySelectorAll(`#row${rowId} > div`)];
+    }
+    if (gameStatus === 'W' || gameStatus === 'L') {
+        rowId = 1;
         feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
     }
 }

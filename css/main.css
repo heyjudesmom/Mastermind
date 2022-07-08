@@ -17,7 +17,6 @@ body {
     margin: 0;
     font-family: 'Bungee Shade', cursive;
 }
-
 #board {
     display: grid;
     grid-template-rows: 1fr repeat(10, 1fr) 2fr;
@@ -46,6 +45,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    cursor: pointer;
 }
 #bank > div, #secret > div { 
     border-radius: 50%;
@@ -129,4 +129,5 @@ button {
     padding: 10%;
     background-color: lavender;
     border-radius: 50%;
+    cursor: pointer;
 }
