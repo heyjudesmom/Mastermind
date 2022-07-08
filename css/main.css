@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
-    margin: 0;
+    margin: 0 ;
     font-family: 'Bungee Shade', cursive;
 }
 #board {
@@ -24,7 +24,6 @@ body {
     border: 1vmin solid rgb(132, 132, 186);
     height: 60%;
 }
-
 .guess {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -60,7 +59,7 @@ body {
     grid-template-rows: 1fr 1fr;
     background-color: rgb(207, 215, 217);
 }
-.dropzone {
+.choice {
     grid-area: "c";
     border: 0.3vmin solid gray;
     border-radius: 50%;

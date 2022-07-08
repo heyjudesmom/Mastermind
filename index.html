@@ -10,155 +10,153 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Shade&family=Monoton&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 
 </head>
 <body>
-        <h1>Mastermind</h1>
-        <h2>Can you crack the code?</h2> 
-        <main id="board">
-            <div id="secret">
+    <h1>Mastermind</h1>
+    <h2>Can you crack the code?</h2> 
+    <main id="board">
+        <div id="secret">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="guess" id="row10">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f10">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row9">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="f" id="f9">
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
             </div>
-            <div class="guess" id="row10">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f10">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row9">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="f" id="f9">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-            <div class="guess" id="row8">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f8">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+        </div>
+        <div class="guess" id="row8">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f8">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
                 </article>
             </div>
             <div class="guess" id="row7">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f7">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row6">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f6">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row5">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f5">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row4">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f4">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row3">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f3">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row2">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f2">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <div class="guess" id="row1">
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <div class="dropzone"></div>
-                <article class="f" id="f1">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </article>
-            </div>
-            <section id="bank">
-                <div id="red"  draggable="true"></div>
-                <div id="orange" draggable="true"></div>
-                <div id="yellow" draggable="true"></div>
-                <div id="green" draggable="true"></div>
-                <div id="blue" draggable="true"></div>
-                <div id="purple" draggable="true"></div>
-                <div id="indigo" draggable="true"></div>
-                <div id="brown" draggable="true"></div>
-            </section>
-        </main>
-        <footer>
-            <button id="play">PLAY AGAIN</button>
-            <button id="check">CHECK</button>
-        </footer> 
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f7">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row6">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f6">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row5">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f5">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row4">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f4">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row3">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f3">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row2">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f2">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <div class="guess" id="row1">
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <div class="choice"></div>
+            <article class="f" id="f1">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </article>
+        </div>
+        <section id="bank">
+            <div id="red"></div>
+            <div id="orange"></div>
+            <div id="yellow"></div>
+            <div id="green"></div>
+            <div id="blue"></div>
+            <div id="purple"></div>
+            <div id="indigo"></div>
+            <div id="brown"></div>
+        </section>
+    </main>
+    <footer>
+        <button id="play">PLAY AGAIN</button>
+        <button id="check">CHECK</button>
+    </footer> 
 </body>
 </html>

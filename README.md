@@ -39,4 +39,4 @@ If you do not want to check that guess, erase the row by clicking the color you 
   * Include instructions on page
   * Add audio to background
   * Add audio to check button
-  * Track wins and losses
+  * Render a scorekeeper for wins and losses

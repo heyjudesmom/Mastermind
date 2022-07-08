@@ -25,14 +25,20 @@ const checkBtn = document.getElementById('check');
 let feedbackEls = document.querySelectorAll(`#f${rowId} > div`);
 const playBtn = document.getElementById('play');
 const msgEl = document.querySelector('h2');
-
+const redEl = document.getElementById('red');
+const orangeEl = document.getElementById('orange');
+const yellowEl = document.getElementById('yellow');
+const greenEl = document.getElementById('green');
+const blueEl = document.getElementById('blue');
+const purpleEl = document.getElementById('purple');
+const indigoEl = document.getElementById('indigo');
+const brownEl = document.getElementById('brown');
 /*----- event listeners -----*/
 let guessClick = document.getElementById('bank').addEventListener('click', storeBankClicks);
 document.getElementById('check').addEventListener('click', handleCheck);
 document.getElementById('play').addEventListener('click', handleReplay);
 /*----- functions -----*/
 init();
-
 function init() {
     rowId = 1;
     secrets = [];
@@ -100,7 +106,7 @@ function renderSecret(){
             div.style.backgroundColor = '#a1a8aa87';
         })
     }
-};
+}
 function storeBankClicks(evt) { 
     if (gameStatus !== null) {
         return
@@ -113,24 +119,15 @@ function storeBankClicks(evt) {
         rowEls.forEach(function(div) {
             div.style.backgroundColor = null;
         })
-    }
-    if (evt.target === document.getElementById('red')) {
-        currentChoices.push(0);
-    }if (evt.target === document.getElementById('orange')) {
-        currentChoices.push(1);
-    }if (evt.target === document.getElementById('yellow')) {
-        currentChoices.push(2);
-    }if (evt.target === document.getElementById('green')) {
-        currentChoices.push(3);
-    }if (evt.target === document.getElementById('blue')) {
-        currentChoices.push(4);
-    }if (evt.target === document.getElementById('purple')) {
-        currentChoices.push(5);
-    }if (evt.target === document.getElementById('indigo')) {
-        currentChoices.push(6);
-    }if (evt.target === document.getElementById('brown')) {
-        currentChoices.push(7);
-    }
+    } 
+     evt.target === redEl ? currentChoices.push(0) 
+    : evt.target === orangeEl ? currentChoices.push(1) 
+    : evt.target === yellowEl ? currentChoices.push(2) 
+    : evt.target === greenEl ? currentChoices.push(3)
+    : evt.target === blueEl ? currentChoices.push(4)
+    : evt.target === purpleEl ? currentChoices.push(5)
+    : evt.target === indigoEl ? currentChoices.push(6)
+    : currentChoices.push(7);
     if (currentChoices.length > 4) {
         currentChoices.length = 0
     }
@@ -138,7 +135,6 @@ function storeBankClicks(evt) {
     render();
 }
 function handleCheck() {
-    //guard
     if (currentChoices.length !== 4) return;
     let perfect = 0;
     let almost = 0;
